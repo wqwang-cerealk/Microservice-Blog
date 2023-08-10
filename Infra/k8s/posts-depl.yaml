@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1 #number of pods to running certain image
+  selector:
+    matchLabels:
+      app: posts
+  #look all pods created, find pods with label 'posts' to manage
+  template:
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: posts
+          image: alexw977068/posts:latest
+  #template is where we specify the exact configuration of a deployment
+  #here we want the pods created with label 'posts'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector: 
+    app: posts
+  type: ClusterIP
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

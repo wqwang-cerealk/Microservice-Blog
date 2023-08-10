@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-depl
+spec:
+  replicas: 1 #number of pods to running certain image
+  selector:
+    matchLabels:
+      app: event-bus
+  #look all pods created, find pods with label 'event-bus' to manage
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+        - name: event-bus
+          image: alexw977068/event-bus
+  #template is where we specify the exact configuration of a deployment
+  #here we want the pods created with label 'event-bus'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv
+spec:
+  selector: 
+    app: event-bus
+  type: ClusterIP
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 4005
+      targetPort: 4005

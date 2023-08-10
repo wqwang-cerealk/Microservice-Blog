@@ -1,0 +1,11 @@
+apiVersion: v1 # specify the set of objects we want K8S to look at
+kind: Pod # Type of object
+metadata: # Config options for the object we are about to create
+  name: posts
+spec: #The exact attributes we want to apply to the object
+  containers:
+    - name: posts
+      image: alexw/posts:0.0.1 # exact image we want to use
+
+# We want Kubernetes to create a pod named posts
+# Inside the pod, we want exactly 1 container named posts 
