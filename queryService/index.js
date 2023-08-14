@@ -67,7 +67,7 @@ app.listen(4002, async () => {
 
         //Every time we use axios, the return result is saving in the response.data 
         for (let event of res.data) {
-            console.log("Processing event", event.type);
+            console.log("Processing event fuck you", event.type);
 
             handleEvent(event.type, event.data);
         }
