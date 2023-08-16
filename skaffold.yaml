@@ -1,0 +1,58 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./Infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: alexw977068/client
+      context: client-ReactApp
+      docker:
+        dockerfile: Dockerfile
+      sync:
+      # rules to update if we change files in client
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: alexw977068/comments
+      context: commentsService
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: alexw977068/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: alexw977068/moderation
+      context: moderationService
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: alexw977068/posts
+      context: postsService
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: alexw977068/query
+      context: queryService
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
